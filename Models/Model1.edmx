@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="stsolucionespcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Computadora">
+          <Key>
+            <PropertyRef Name="id_computadora" />
+          </Key>
+          <Property Name="id_computadora" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="modelo" Type="nvarchar" MaxLength="255" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="255" />
+          <Property Name="num_cedulaClie" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DetalleServicio">
+          <Key>
+            <PropertyRef Name="id_detalle" />
+          </Key>
+          <Property Name="id_detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_factura" Type="int" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="255" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="precio_unitario" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="FacturaServicio">
+          <Key>
+            <PropertyRef Name="id_factura" />
+          </Key>
+          <Property Name="id_factura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_informe_fallo" Type="int" />
+          <Property Name="total_servicio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total_repuestos" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="iva" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="total_factura" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InformeFallo">
+          <Key>
+            <PropertyRef Name="id_informe" />
+          </Key>
+          <Property Name="id_informe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_computadora" Type="int" />
+          <Property Name="estado" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fecha_aprox" Type="date" />
+          <Property Name="repuesto" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Itinerario">
+          <Key>
+            <PropertyRef Name="id_itinerario" />
+          </Key>
+          <Property Name="id_itinerario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_asignacion" Type="date" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="255" />
+          <Property Name="num_cedulaTec" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="num_cedula" />
+          </Key>
+          <Property Name="num_cedula" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="255" />
+          <Property Name="nom_usuario" Type="nvarchar" MaxLength="50" />
+          <Property Name="clave" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Computado__num_c__276EDEB3">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Computadora" Type="Self.Computadora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="num_cedula" />
+            </Principal>
+            <Dependent Role="Computadora">
+              <PropertyRef Name="num_cedulaClie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleSe__id_fa__398D8EEE">
+          <End Role="FacturaServicio" Type="Self.FacturaServicio" Multiplicity="0..1" />
+          <End Role="DetalleServicio" Type="Self.DetalleServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacturaServicio">
+              <PropertyRef Name="id_factura" />
+            </Principal>
+            <Dependent Role="DetalleServicio">
+              <PropertyRef Name="id_factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaSe__id_in__36B12243">
+          <End Role="InformeFallo" Type="Self.InformeFallo" Multiplicity="0..1" />
+          <End Role="FacturaServicio" Type="Self.FacturaServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InformeFallo">
+              <PropertyRef Name="id_informe" />
+            </Principal>
+            <Dependent Role="FacturaServicio">
+              <PropertyRef Name="id_informe_fallo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InformeFa__id_co__2A4B4B5E">
+          <End Role="Computadora" Type="Self.Computadora" Multiplicity="0..1" />
+          <End Role="InformeFallo" Type="Self.InformeFallo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Computadora">
+              <PropertyRef Name="id_computadora" />
+            </Principal>
+            <Dependent Role="InformeFallo">
+              <PropertyRef Name="id_computadora" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itinerari__num_c__2D27B809">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Itinerario" Type="Self.Itinerario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="num_cedula" />
+            </Principal>
+            <Dependent Role="Itinerario">
+              <PropertyRef Name="num_cedulaTec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="stsolucionespcModelStoreContainer">
+          <EntitySet Name="Computadora" EntityType="Self.Computadora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleServicio" EntityType="Self.DetalleServicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FacturaServicio" EntityType="Self.FacturaServicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformeFallo" EntityType="Self.InformeFallo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Itinerario" EntityType="Self.Itinerario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Computado__num_c__276EDEB3" Association="Self.FK__Computado__num_c__276EDEB3">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Computadora" EntitySet="Computadora" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleSe__id_fa__398D8EEE" Association="Self.FK__DetalleSe__id_fa__398D8EEE">
+            <End Role="FacturaServicio" EntitySet="FacturaServicio" />
+            <End Role="DetalleServicio" EntitySet="DetalleServicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaSe__id_in__36B12243" Association="Self.FK__FacturaSe__id_in__36B12243">
+            <End Role="InformeFallo" EntitySet="InformeFallo" />
+            <End Role="FacturaServicio" EntitySet="FacturaServicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InformeFa__id_co__2A4B4B5E" Association="Self.FK__InformeFa__id_co__2A4B4B5E">
+            <End Role="Computadora" EntitySet="Computadora" />
+            <End Role="InformeFallo" EntitySet="InformeFallo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itinerari__num_c__2D27B809" Association="Self.FK__Itinerari__num_c__2D27B809">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Itinerario" EntitySet="Itinerario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="stsolucionespcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Computadora">
+          <Key>
+            <PropertyRef Name="id_computadora" />
+          </Key>
+          <Property Name="id_computadora" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modelo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="num_cedulaClie" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Computado__num_c__276EDEB3" FromRole="Computadora" ToRole="Usuario" />
+          <NavigationProperty Name="InformeFallo" Relationship="Self.FK__InformeFa__id_co__2A4B4B5E" FromRole="Computadora" ToRole="InformeFallo" />
+        </EntityType>
+        <EntityType Name="DetalleServicio">
+          <Key>
+            <PropertyRef Name="id_detalle" />
+          </Key>
+          <Property Name="id_detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_factura" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="precio_unitario" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="FacturaServicio" Relationship="Self.FK__DetalleSe__id_fa__398D8EEE" FromRole="DetalleServicio" ToRole="FacturaServicio" />
+        </EntityType>
+        <EntityType Name="FacturaServicio">
+          <Key>
+            <PropertyRef Name="id_factura" />
+          </Key>
+          <Property Name="id_factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_informe_fallo" Type="Int32" />
+          <Property Name="total_servicio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total_repuestos" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="iva" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="total_factura" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="DetalleServicio" Relationship="Self.FK__DetalleSe__id_fa__398D8EEE" FromRole="FacturaServicio" ToRole="DetalleServicio" />
+          <NavigationProperty Name="InformeFallo" Relationship="Self.FK__FacturaSe__id_in__36B12243" FromRole="FacturaServicio" ToRole="InformeFallo" />
+        </EntityType>
+        <EntityType Name="InformeFallo">
+          <Key>
+            <PropertyRef Name="id_informe" />
+          </Key>
+          <Property Name="id_informe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_computadora" Type="Int32" />
+          <Property Name="estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_aprox" Type="DateTime" Precision="0" />
+          <Property Name="repuesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Computadora" Relationship="Self.FK__InformeFa__id_co__2A4B4B5E" FromRole="InformeFallo" ToRole="Computadora" />
+          <NavigationProperty Name="FacturaServicio" Relationship="Self.FK__FacturaSe__id_in__36B12243" FromRole="InformeFallo" ToRole="FacturaServicio" />
+        </EntityType>
+        <EntityType Name="Itinerario">
+          <Key>
+            <PropertyRef Name="id_itinerario" />
+          </Key>
+          <Property Name="id_itinerario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_asignacion" Type="DateTime" Precision="0" />
+          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="num_cedulaTec" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Itinerari__num_c__2D27B809" FromRole="Itinerario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="num_cedula" />
+          </Key>
+          <Property Name="num_cedula" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="nom_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="clave" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Computadora" Relationship="Self.FK__Computado__num_c__276EDEB3" FromRole="Usuario" ToRole="Computadora" />
+          <NavigationProperty Name="Itinerario" Relationship="Self.FK__Itinerari__num_c__2D27B809" FromRole="Usuario" ToRole="Itinerario" />
+        </EntityType>
+        <Association Name="FK__Computado__num_c__276EDEB3">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Computadora" Type="Self.Computadora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="num_cedula" />
+            </Principal>
+            <Dependent Role="Computadora">
+              <PropertyRef Name="num_cedulaClie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InformeFa__id_co__2A4B4B5E">
+          <End Role="Computadora" Type="Self.Computadora" Multiplicity="0..1" />
+          <End Role="InformeFallo" Type="Self.InformeFallo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Computadora">
+              <PropertyRef Name="id_computadora" />
+            </Principal>
+            <Dependent Role="InformeFallo">
+              <PropertyRef Name="id_computadora" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleSe__id_fa__398D8EEE">
+          <End Role="FacturaServicio" Type="Self.FacturaServicio" Multiplicity="0..1" />
+          <End Role="DetalleServicio" Type="Self.DetalleServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacturaServicio">
+              <PropertyRef Name="id_factura" />
+            </Principal>
+            <Dependent Role="DetalleServicio">
+              <PropertyRef Name="id_factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacturaSe__id_in__36B12243">
+          <End Role="InformeFallo" Type="Self.InformeFallo" Multiplicity="0..1" />
+          <End Role="FacturaServicio" Type="Self.FacturaServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InformeFallo">
+              <PropertyRef Name="id_informe" />
+            </Principal>
+            <Dependent Role="FacturaServicio">
+              <PropertyRef Name="id_informe_fallo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itinerari__num_c__2D27B809">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Itinerario" Type="Self.Itinerario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="num_cedula" />
+            </Principal>
+            <Dependent Role="Itinerario">
+              <PropertyRef Name="num_cedulaTec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="stsolucionesPcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Computadora" EntityType="Self.Computadora" />
+          <EntitySet Name="DetalleServicio" EntityType="Self.DetalleServicio" />
+          <EntitySet Name="FacturaServicio" EntityType="Self.FacturaServicio" />
+          <EntitySet Name="InformeFallo" EntityType="Self.InformeFallo" />
+          <EntitySet Name="Itinerario" EntityType="Self.Itinerario" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Computado__num_c__276EDEB3" Association="Self.FK__Computado__num_c__276EDEB3">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Computadora" EntitySet="Computadora" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InformeFa__id_co__2A4B4B5E" Association="Self.FK__InformeFa__id_co__2A4B4B5E">
+            <End Role="Computadora" EntitySet="Computadora" />
+            <End Role="InformeFallo" EntitySet="InformeFallo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleSe__id_fa__398D8EEE" Association="Self.FK__DetalleSe__id_fa__398D8EEE">
+            <End Role="FacturaServicio" EntitySet="FacturaServicio" />
+            <End Role="DetalleServicio" EntitySet="DetalleServicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacturaSe__id_in__36B12243" Association="Self.FK__FacturaSe__id_in__36B12243">
+            <End Role="InformeFallo" EntitySet="InformeFallo" />
+            <End Role="FacturaServicio" EntitySet="FacturaServicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itinerari__num_c__2D27B809" Association="Self.FK__Itinerari__num_c__2D27B809">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Itinerario" EntitySet="Itinerario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="stsolucionespcModelStoreContainer" CdmEntityContainer="stsolucionesPcEntities">
+          <EntitySetMapping Name="Computadora">
+            <EntityTypeMapping TypeName="stsolucionespcModel.Computadora">
+              <MappingFragment StoreEntitySet="Computadora">
+                <ScalarProperty Name="id_computadora" ColumnName="id_computadora" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="num_cedulaClie" ColumnName="num_cedulaClie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleServicio">
+            <EntityTypeMapping TypeName="stsolucionespcModel.DetalleServicio">
+              <MappingFragment StoreEntitySet="DetalleServicio">
+                <ScalarProperty Name="id_detalle" ColumnName="id_detalle" />
+                <ScalarProperty Name="id_factura" ColumnName="id_factura" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FacturaServicio">
+            <EntityTypeMapping TypeName="stsolucionespcModel.FacturaServicio">
+              <MappingFragment StoreEntitySet="FacturaServicio">
+                <ScalarProperty Name="id_factura" ColumnName="id_factura" />
+                <ScalarProperty Name="id_informe_fallo" ColumnName="id_informe_fallo" />
+                <ScalarProperty Name="total_servicio" ColumnName="total_servicio" />
+                <ScalarProperty Name="total_repuestos" ColumnName="total_repuestos" />
+                <ScalarProperty Name="iva" ColumnName="iva" />
+                <ScalarProperty Name="total_factura" ColumnName="total_factura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformeFallo">
+            <EntityTypeMapping TypeName="stsolucionespcModel.InformeFallo">
+              <MappingFragment StoreEntitySet="InformeFallo">
+                <ScalarProperty Name="id_informe" ColumnName="id_informe" />
+                <ScalarProperty Name="id_computadora" ColumnName="id_computadora" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_aprox" ColumnName="fecha_aprox" />
+                <ScalarProperty Name="repuesto" ColumnName="repuesto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Itinerario">
+            <EntityTypeMapping TypeName="stsolucionespcModel.Itinerario">
+              <MappingFragment StoreEntitySet="Itinerario">
+                <ScalarProperty Name="id_itinerario" ColumnName="id_itinerario" />
+                <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="num_cedulaTec" ColumnName="num_cedulaTec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="stsolucionespcModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="num_cedula" ColumnName="num_cedula" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="nom_usuario" ColumnName="nom_usuario" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

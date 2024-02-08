@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Listado de Usuarios";
+}
+
+<h2>@ViewBag.Title</h2>
+<div id="divLista" class="form-horizontal">
+</div>
+@section scripts {
+<script>
+    urlGet = "@Url.Content("~/Usuario/List")";
+    getListUsuarios();
+
+    function getListUsuarios() {
+        fetch(urlGet)
+            .then(function (respuesta) {
+                return respuesta.text();
+            })
+            .then((data) => {
+                document.getElementById("divLista").innerHTML = data;
+            })
+    }
+
+
+    function funDelete(num_cedula) {
+         var url = "@Url.Content("~/Usuario/Delete")";
+         fetch(url, {
+             method: "POST",
+             body: JSON.stringify({
+                  num_cedula: num_cedula
+             }),
+             headers: {
+             "Accept": "application/json",
+             "Content-Type": "application/json"
+                    }
+         }).then(function (response) {
+            if (response.ok)
+            return response.text()
+            else
+            alert("Error al ejecutar:(")
+         }).then(function (Data) {
+            if (Data != "1") {
+            alert(Data)
+            } else {
+                getListUsuarios();
+            }
+         })
+
+    }
+
+    function eliminarUsuario(num_cedula) {
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Usuario")',
+                    type: 'POST',
+                    data: { num_cedula: num_cedula },
+                    success: function (response) {
+                        if (response === "1") {
+                            alert("Usuario eliminado correctamente");
+                            window.location.reload();
+                        } else {
+                            alert("Error al eliminar el usuario");
+                        }
+                    },
+                    error: function () {
+                        alert("Error al eliminar el usuario");
+                    }
+                });
+            }
+        }
+    </script>
+}

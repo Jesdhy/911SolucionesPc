@@ -1,0 +1,147 @@
+﻿@using PcSoluciones.Models.ViewModel
+@model List<ListUsuarios>
+
+@{
+    ViewBag.Title = "Listado Usuarios";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<style>
+    body {
+        font-family: Verdana, sans-serif;
+    }
+
+    .container {
+        margin: 20px;
+    }
+
+    .table-container {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        box-shadow: 0 0 20px rgb(0, 9, 0, 0.1);
+    }
+
+        .table-container th,
+        .table-container td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table-container th {
+            background-color: #d9cef8;
+        }
+
+    .btn {
+        padding: 8px 12px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #9baefa;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #fc5c9f;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-refresh {
+        background-color: #4ca543;
+        color: #fff;
+        border: none;
+    }
+
+    .employee-table-container {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        overflow: hidden; /* Para evitar que el contenido se desborde */
+    }
+
+    /* Estilos para centrar el encabezado */
+    .table-container th {
+        text-align: center;
+    }
+
+    /* Estilos para quitar el borde del cuadro */
+    .table-container {
+        border: none;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        /* Estilos adicionales para las celdas */
+        .table-container td, .table-container th {
+            border: none;
+            padding: 10px;
+            text-align: center; /* Centrar contenido de las celdas */
+        }
+
+    /* Estilos para alinear botones al centro */
+    .btn-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<input type="button" class="btn btn-refresh" value="Refrescar" onclick="getListUsuarios()" />
+<input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/Usuario/New")'" />
+
+@foreach (var usuario in Model)
+{
+    <div class="employee-table-container">
+        <table class="table-container">
+            <thead>
+                <tr>
+                    <th>CEDULA</th>
+                    <th>NOMBRE</th>
+                    <th>USUARIO</th>
+                    <th>ACCION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@usuario.num_cedula</td>
+                    <td>@usuario.nombre</td>
+                    <td>@usuario.nom_usuario</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Usuario", new { num_cedula = usuario.num_cedula })" class="btn btn-primary">Editar</a>
+                        <button type="button" class="btn btn-danger" onclick="eliminarUsuario('@usuario.num_cedula')">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section scripts {
+    <script>
+        function eliminarUsuario(num_cedula) {
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Usuario")',
+                    type: 'POST',
+                    data: { num_cedula: num_cedula },
+                    success: function (response) {
+                        if (response === "1") {
+                            alert("Usuario eliminado correctamente");
+                            window.location.reload();
+                        } else {
+                            alert("Error al eliminar el Usuario");
+                        }
+                    },
+                    error: function () {
+                        alert("Error al eliminar el usuario");
+                    }
+                });
+            }
+        }
+    </script>
+}

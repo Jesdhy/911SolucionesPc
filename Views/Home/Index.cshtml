@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "911 PC SOLUCIONES";
+}
+
+<main>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4 text-light">Bienvenido</h1>
+            <p class="lead text-light">Soluciones confiables para todos tus problemas informáticos.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <section class="col-md-4 service">
+                <p>
+                    <a class="btn btn-outline-light" onclick="document.location.href='@Url.Content("~/Usuario/Index")'">
+                        <img src="~/pictures/Cliente.png" alt="Texto alternativo de la imagen">
+                        Administrar clientes &raquo;
+                    </a>
+                </p>
+            </section>
+
+            <section class="col-md-4 service">
+                <p>
+                    <a class="btn btn-outline-light" href='#'>
+                        <img src="~/pictures/Tecnico.png" alt="Texto alternativo de la imagen">
+                        Administrar Técnico &raquo;
+                    </a>
+                </p>
+            </section>
+            <section class="col-md-4 service">
+                <p>
+                    <a class="btn btn-outline-light" href="#">
+                        <img src="~/pictures/computadora.png" alt="Texto alternativo de la imagen">
+                        Registro Computadoras &raquo;
+                    </a>
+                </p>
+            </section>
+        </div>
+    </div>
+</main>
+
+<style>
+    body {
+        font-family: fantasy;
+        background-image: url('https://serviciotecnicodecomputadoras.com/wp-content/uploads/2023/05/SERVICIO-TECNICO-PORTADA.png');
+        background-size: cover;
+        background-attachment: fixed;
+        color: #ffffff; /* Color de texto blanco */
+        margin: 0;
+        padding: 0;
+        background-color: rgb(169, 228, 255); /* Fondo con nuevo color HEX y mayor transparencia */
+    }
+
+    main {
+        padding-top: 40px;
+    }
+
+    .jumbotron {
+        background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+        padding: 70px 0;
+        margin-bottom: 0;
+    }
+
+    .service {
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        background-color: #f0b184;
+        border-color: #f0b184;
+    }
+
+    .btn-outline-light {
+        margin: 10px;
+        background-color: #0606066d;
+    }
+
+    .text-light {
+        color: #060606; /* Cambio de color de texto claro */
+    }
+</style>

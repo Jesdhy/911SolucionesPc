@@ -1,0 +1,130 @@
+﻿@model PcSoluciones.Models.ViewModel.UsuarioVista
+@{
+    ViewBag.Title = "Nuevo Usuario";
+}
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        body2 {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="button"] {
+            background-color: #00ff21;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            input[type="button"]:hover {
+                background-color: #00cc1a;
+            }
+    </style>
+</head>
+<body2>
+
+    <form>
+        <h2>@ViewBag.Title</h2>
+
+        <div class="form-group">
+            <label for="num_cedula">Número de Cédula</label>
+            @Html.TextBoxFor(d => d.num_cedula, new { id = "num_cedula" })
+        </div>
+
+        <div class="form-group">
+            <label for="nombre">Nombre del Empleado</label>
+            @Html.TextBoxFor(d => d.nombre, new { id = "nombre" })
+        </div>
+
+        <div class="form-group">
+            <label for="nom_usuario">Usuario</label>
+            @Html.TextBoxFor(d => d.nom_usuario, new { id = "nom_usuario" })
+        </div>
+
+        <div class="form-group">
+            <label for="clave">Clave</label>
+            @Html.TextBoxFor(d => d.clave, new { id = "clave" })
+        </div>
+
+        <input type="button" value="Guardar" onclick="funInsertar()" />
+
+    </form>
+
+</body2>
+
+
+<script>
+    var url = "@Url.Content("~/Usuario/Save")";
+
+    function funInsertar() {
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                num_cedula: document.getElementById("num_cedula").value,
+                nombre: document.getElementById("nombre").value,
+                nom_usuario: document.getElementById("nom_usuario").value,
+                clave: document.getElementById("clave").value
+            }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text()
+            else
+                alert("Error al ejecutar:(")
+        }).then(function (Data) {
+            if (Data != "1") {
+                alert(Data)
+            } else {
+                document.location.href="@Url.Content("~/Usuario/")"
+            }
+        })
+    }
+
+</script>

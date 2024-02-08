@@ -1,0 +1,65 @@
+﻿@model PcSoluciones.Models.ViewModel.UsuarioVista
+@{
+    ViewBag.Title = "Modificar Usuario";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form>
+    @Html.HiddenFor(d => d.num_cedula, new { id = "num_cedula" })
+
+    <div class="form-group">
+        @Html.LabelFor(d => d.num_cedula)
+        @Html.TextBoxFor(d => d.num_cedula, new { id = "num_cedula" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(d => d.nombre)
+        @Html.TextBoxFor(d => d.nombre, new { id = "nombre" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(d => d.nom_usuario)
+        @Html.TextBoxFor(d => d.nom_usuario, new { id = "nom_usuario" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(d => d.clave)
+        @Html.TextBoxFor(d => d.clave, new { id = "clave" })
+    </div>
+    <input type="button" value="Guardar" onclick="funEditar()" />
+
+</form>
+
+<script>
+    var url = "@Url.Content("~/Usuario/Update")";
+
+    function funEditar() {
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                num_cedula: document.getElementById("num_cedula").value,
+                nombre: document.getElementById("nombre").value,
+                nom_usuario: document.getElementById("nom_usuario").value,
+                clave: document.getElementById("clave").value
+            }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text()
+            else
+                alert("Error al ejecutar:(")
+        }).then(function (Data) {
+            if (Data != "1") {
+                alert(Data)
+            } else {
+                document.location.href="@Url.Content("~/Usuario/")"
+            }
+        })
+    }
+
+</script>
+
