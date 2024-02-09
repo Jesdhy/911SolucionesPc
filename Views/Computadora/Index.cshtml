@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Listado de Computadoras";
+}
+
+<h2>@ViewBag.Title</h2>
+<div id="divLista" class="form-horizontal">
+</div>
+@section scripts {
+    <script>
+    urlGet = "@Url.Content("~/Computadora/List")";
+    getListComputadora();
+
+        function getListComputadora() {
+        fetch(urlGet)
+            .then(function (respuesta) {
+                return respuesta.text();
+            })
+            .then((data) => {
+                document.getElementById("divLista").innerHTML = data;
+            })
+    }
+    </script>
+}

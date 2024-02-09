@@ -18,7 +18,7 @@ namespace PcSoluciones.Controllers
         public ActionResult List()
         {
             List<ListUsuarios> lst = new List<ListUsuarios>();
-            using (stsolucionesPcEntities db = new stsolucionesPcEntities())
+            using (stSolucionesPcEntities db = new stSolucionesPcEntities())
             {
                 lst =
                     (from d in db.Usuario 
@@ -43,7 +43,7 @@ namespace PcSoluciones.Controllers
         {
             try
             {
-                using (stsolucionesPcEntities db = new stsolucionesPcEntities())
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
                 {
                     var oUsuario = new Usuario();
                     oUsuario.num_cedula = model.num_cedula;
@@ -69,7 +69,7 @@ namespace PcSoluciones.Controllers
             UsuarioVista model = new UsuarioVista();
             try
             {
-                using (stsolucionesPcEntities db = new stsolucionesPcEntities())
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
                 {
                     var oEmpleado = db.Usuario.Find(num_cedula);
                     model.nombre = oEmpleado.nombre;
@@ -91,7 +91,7 @@ namespace PcSoluciones.Controllers
         {
             try
             {
-                using (stsolucionesPcEntities db = new stsolucionesPcEntities())
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
                 {
                     var oUsuario = db.Usuario.Find(model.num_cedula);
                     oUsuario.nombre = model.nombre;
@@ -115,7 +115,7 @@ namespace PcSoluciones.Controllers
         {
             try
             {
-                using (stsolucionesPcEntities db = new stsolucionesPcEntities())
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
                 {
                     var oUsuario = db.Usuario.Find(num_cedula);
                     db.Usuario.Remove(oUsuario);

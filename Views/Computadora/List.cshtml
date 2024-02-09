@@ -1,0 +1,12 @@
+﻿@model List<PcSoluciones.Models.ViewModel.ComputadoraVista.UsuarioConComputadoraModel>
+
+@foreach (var usuarioConComputadora in Model)
+{
+    <h2>@usuarioConComputadora.usuario.nombre</h2>
+    <ul>
+        @foreach (var computadora in usuarioConComputadora.Computadoras)
+        {
+            <li>@computadora.modelo - @computadora.descripcion</li>
+        }
+    </ul>
+}

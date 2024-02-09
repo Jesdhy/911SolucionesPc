@@ -13,10 +13,10 @@ namespace PcSoluciones.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class stsolucionesPcEntities : DbContext
+    public partial class stSolucionesPcEntities : DbContext
     {
-        public stsolucionesPcEntities()
-            : base("name=stsolucionesPcEntities")
+        public stSolucionesPcEntities()
+            : base("name=stSolucionesPcEntities")
         {
         }
     

@@ -284,7 +284,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="stsolucionesPcEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="stSolucionesPcEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Computadora" EntityType="Self.Computadora" />
           <EntitySet Name="DetalleServicio" EntityType="Self.DetalleServicio" />
           <EntitySet Name="FacturaServicio" EntityType="Self.FacturaServicio" />
@@ -317,7 +317,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="stsolucionespcModelStoreContainer" CdmEntityContainer="stsolucionesPcEntities">
+        <EntityContainerMapping StorageEntityContainer="stsolucionespcModelStoreContainer" CdmEntityContainer="stSolucionesPcEntities">
           <EntitySetMapping Name="Computadora">
             <EntityTypeMapping TypeName="stsolucionespcModel.Computadora">
               <MappingFragment StoreEntitySet="Computadora">
