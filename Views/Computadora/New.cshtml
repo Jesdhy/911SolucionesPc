@@ -1,6 +1,6 @@
-﻿@model PcSoluciones.Models.ViewModel.UsuarioVista
+﻿@model PcSoluciones.Models.ViewModel.ComputadoraVista.ComputadoraModel
 @{
-    ViewBag.Title = "Nuevo Usuario";
+    ViewBag.Title = "Registrar Computadora";
 }
 
 <head>
@@ -63,49 +63,44 @@
             }
     </style>
 </head>
-<body2>
+<body>
 
     <form>
         <h2>@ViewBag.Title</h2>
 
         <div class="form-group">
-            <label for="num_cedula">Número de Cédula</label>
-            @Html.TextBoxFor(d => d.num_cedula, new { id = "num_cedula" })
+            <label for="num_cedulaClie">Número de Cédula del Cliente:</label>
+            @Html.DropDownListFor(d => d.num_cedulaClie, (IEnumerable<SelectListItem>)ViewBag.NumCedulaList, "Seleccione una opción", new { @class = "form-control", id = "num_cedulaClie" })
+
         </div>
 
         <div class="form-group">
-            <label for="nombre">Nombre del Empleado</label>
-            @Html.TextBoxFor(d => d.nombre, new { id = "nombre" })
+            <label for="modelo">Modelo</label>
+            @Html.TextBoxFor(d => d.modelo, new { id = "modelo" })
         </div>
 
         <div class="form-group">
-            <label for="nom_usuario">Usuario</label>
-            @Html.TextBoxFor(d => d.nom_usuario, new { id = "nom_usuario" })
-        </div>
-
-        <div class="form-group">
-            <label for="clave">Clave</label>
-            @Html.TextBoxFor(d => d.clave, new { id = "clave" })
+            <label for="descripcion">Descripción del estado actual</label>
+            @Html.TextBoxFor(d => d.descripcion, new { id = "descripcion" })
         </div>
 
         <input type="button" value="Guardar" onclick="funInsertar()" />
 
     </form>
 
-</body2>
+</body>
 
 
 <script>
-    var url = "@Url.Content("~/Usuario/Save")";
+    var url = "@Url.Content("~/Computadora/Save")";
 
     function funInsertar() {
         fetch(url, {
             method: "POST",
             body: JSON.stringify({
-                num_cedula: document.getElementById("num_cedula").value,
-                nombre: document.getElementById("nombre").value,
-                nom_usuario: document.getElementById("nom_usuario").value,
-                clave: document.getElementById("clave").value
+                num_cedulaClie: document.getElementById("num_cedulaClie").value,
+                modelo: document.getElementById("modelo").value,
+                descripcion: document.getElementById("descripcion").value
             }),
             headers: {
                 "Accept": "application/json",
@@ -120,9 +115,10 @@
             if (Data != "1") {
                 alert(Data)
             } else {
-                document.location.href="@Url.Content("~/Usuario/")"
+                document.location.href="@Url.Content("~/Computadora/")"
             }
         })
     }
 
 </script>
+

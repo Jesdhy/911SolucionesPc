@@ -1,12 +1,97 @@
 ﻿@model List<PcSoluciones.Models.ViewModel.ComputadoraVista.UsuarioConComputadoraModel>
-
-@foreach (var usuarioConComputadora in Model)
-{
-    <h2>@usuarioConComputadora.usuario.nombre</h2>
-    <ul>
-        @foreach (var computadora in usuarioConComputadora.Computadoras)
-        {
-            <li>@computadora.modelo - @computadora.descripcion</li>
-        }
-    </ul>
+@{
+    ViewBag.Title = "Listado Usuarios y Computadoras";
 }
+
+<h2>@ViewBag.Title</h2>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            padding: 8px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #9baefa;
+            color: #fff;
+            border: none;
+        }
+
+        .usuario {
+            margin-bottom: 20px;
+        }
+
+            .usuario h2 {
+                color: #333;
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+        .computadoras {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .computadora {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            padding: 10px;
+        }
+
+            .computadora h3 {
+                color: #555;
+                font-size: 18px;
+                margin: 0;
+                margin-bottom: 5px;
+            }
+
+            .computadora p {
+                color: #777;
+                margin: 0;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/Computadora/New")'" />
+
+        @foreach (var usuarioConComputadora in Model)
+        {
+            <div class="usuario">
+                <h2>@usuarioConComputadora.usuario.nombre</h2>
+                <ul class="computadoras">
+                    @foreach (var computadora in usuarioConComputadora.Computadoras)
+                    {
+                        <li class="computadora">
+                            <h3>@computadora.modelo</h3>
+                            <p>@computadora.descripcion</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</body>
+</html>
+

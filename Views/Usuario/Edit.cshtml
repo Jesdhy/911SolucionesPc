@@ -3,33 +3,95 @@
     ViewBag.Title = "Modificar Usuario";
 }
 
-<h2>@ViewBag.Title</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-<form>
-    @Html.HiddenFor(d => d.num_cedula, new { id = "num_cedula" })
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-    <div class="form-group">
-        @Html.LabelFor(d => d.num_cedula)
-        @Html.TextBoxFor(d => d.num_cedula, new { id = "num_cedula" })
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            input[type="button"]:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>@ViewBag.Title</h2>
+
+        <form>
+            @Html.HiddenFor(d => d.num_cedula)
+
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                @Html.TextBoxFor(d => d.nombre, new { id = "nombre" })
+            </div>
+
+            <div class="form-group">
+                <label for="nom_usuario">Nombre de Usuario:</label>
+                @Html.TextBoxFor(d => d.nom_usuario, new { id = "nom_usuario" })
+            </div>
+
+            <input type="button" value="Guardar" onclick="funEditar()" />
+        </form>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(d => d.nombre)
-        @Html.TextBoxFor(d => d.nombre, new { id = "nombre" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(d => d.nom_usuario)
-        @Html.TextBoxFor(d => d.nom_usuario, new { id = "nom_usuario" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(d => d.clave)
-        @Html.TextBoxFor(d => d.clave, new { id = "clave" })
-    </div>
-    <input type="button" value="Guardar" onclick="funEditar()" />
-
-</form>
+</body>
+</html>
 
 <script>
     var url = "@Url.Content("~/Usuario/Update")";
@@ -40,8 +102,7 @@
             body: JSON.stringify({
                 num_cedula: document.getElementById("num_cedula").value,
                 nombre: document.getElementById("nombre").value,
-                nom_usuario: document.getElementById("nom_usuario").value,
-                clave: document.getElementById("clave").value
+                nom_usuario: document.getElementById("nom_usuario").value
             }),
             headers: {
                 "Accept": "application/json",
