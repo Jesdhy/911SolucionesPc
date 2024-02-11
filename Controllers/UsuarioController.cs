@@ -131,7 +131,7 @@ namespace PcSoluciones.Controllers
         }
 
 
-        public ActionResult ListBox()
+        public ActionResult Factura()
         {
             return View();
         }
