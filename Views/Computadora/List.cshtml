@@ -5,9 +5,6 @@
 
 <h2>@ViewBag.Title</h2>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +21,7 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .btn {
             padding: 8px 12px;
             margin-right: 5px;
@@ -31,7 +29,25 @@
         }
 
         .btn-primary {
+            background-color: #5aea49;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-edit {
             background-color: #9baefa;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-refrs {
+            background-color: #6aa4ff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-btn-danger {
+            background-color: #e81b1b;
             color: #fff;
             border: none;
         }
@@ -70,16 +86,22 @@
                 margin: 0;
             }
     </style>
-</head>
-<body>
-    <div class="container">
-        
-        <input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/Computadora/New")'" />
 
+    <input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/Computadora/New")'" />
+    <input type="button" class="btn btn-refrs" value="Refrescar" onclick="getListComputadora()" />
+
+    <div class="container">
         @foreach (var usuarioConComputadora in Model)
         {
             <div class="usuario">
-                <h2>@usuarioConComputadora.usuario.nombre</h2>
+                <h2>
+                    @usuarioConComputadora.usuario.nombre
+                    @foreach (var computadora in usuarioConComputadora.Computadoras)
+                    {
+                        <a href="@Url.Action("Edit", "Computadora", new { id_computadora = computadora.id_computadora })" class="btn btn-edit">Editar</a>
+                        <button type="button" class="btn btn-danger" onclick= "eliminarComputadora('@computadora.id_computadora')">Eliminar</button>
+                    }
+                </h2>
                 <ul class="computadoras">
                     @foreach (var computadora in usuarioConComputadora.Computadoras)
                     {
@@ -91,7 +113,33 @@
                 </ul>
             </div>
         }
-    </div>
-</body>
-</html>
+
+    @section scripts {
+            <script>
+                function eliminarComputadora(id_computadora) {
+                    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                        $.ajax({
+                            url: '@Url.Action("Delete", "Computadora")',
+                            type: 'POST',
+                            data: { id_computadora: id_computadora },
+                            success: function (response) {
+                                if (response === "1") {
+                                    alert("Computadora eliminada correctamente");
+                                    window.location.reload();
+                                } else {
+                                    alert("Error al eliminar la computadora");
+                                }
+                            },
+                            error: function () {
+                                alert("Error al eliminar la computadora");
+                            }
+                        });
+                    }
+                }
+            </script>
+    }
+
+</div>
+
+
 

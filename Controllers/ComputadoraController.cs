@@ -2,7 +2,9 @@
 using PcSoluciones.Models.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using static PcSoluciones.Models.ViewModel.ComputadoraVista;
@@ -93,22 +95,103 @@ namespace PcSoluciones.Controllers
                         db.Computadora.Add(nuevaComputadoraDB);
                         db.SaveChanges();
 
-                        // Redireccionar a la página de lista después de agregar exitosamente
-                        return RedirectToAction("List", "Computadora");
+                        return Content("1"); // Indica éxito al cliente
                     }
                 }
                 catch (Exception ex)
                 {
                     // Manejar errores si ocurren
-                    Console.WriteLine(ex.Message);
-                    ModelState.AddModelError("", "Ocurrió un error al agregar la nueva computadora.");
+                    return Content(ex.Message);
                 }
             }
 
             // Si hay errores de validación, volver a mostrar el formulario con los errores
-            return View("List", nuevaComputadora);
+            return View("New", nuevaComputadora);
         }
 
+        public ActionResult Edit(int id_computadora)
+        {
+            ComputadoraVista.ComputadoraModel model = new ComputadoraVista.ComputadoraModel();
+            try
+            {
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
+                {
+                    var computadora = db.Computadora.Find(id_computadora);
+                    if (computadora == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    model.id_computadora = computadora.id_computadora;
+                    model.modelo = computadora.modelo;
+                    model.descripcion = computadora.descripcion;
+                    model.num_cedulaClie = computadora.num_cedulaClie;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Update(ComputadoraVista.ComputadoraModel model)
+        {
+            try
+            {
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
+                {
+                    var computadora = db.Computadora.Find(model.id_computadora);
+                    if (computadora == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    computadora.modelo = model.modelo;
+                    computadora.descripcion = model.descripcion;
+                    computadora.num_cedulaClie = model.num_cedulaClie;
+
+                    db.Entry(computadora).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return Content("1");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+
+
+        public ActionResult Delete(int id_computadora)
+        {
+            try
+            {
+                using (stSolucionesPcEntities db = new stSolucionesPcEntities())
+                {
+                    var computadora = db.Computadora.Find(id_computadora);
+                    if (computadora == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    db.Computadora.Remove(computadora);
+                    db.SaveChanges();
+                }
+                return Content("1");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+
+
+
     }
+
+
 
 }

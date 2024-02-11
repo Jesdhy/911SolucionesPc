@@ -1,5 +1,4 @@
 ﻿
-
 @section scripts {
     <script>
     urlGet = "@Url.Content("~/Computadora/List")";
@@ -13,6 +12,34 @@
             .then((data) => {
                 document.getElementById("divLista").innerHTML = data;
             })
-    }
-    </script>
+        }
+
+        function funDelete(id_computadora) {
+             var url = "@Url.Content("~/Computadora/Delete")";
+             fetch(url, {
+                 method: "POST",
+                 body: JSON.stringify({
+                     id_computadora: id_computadora
+                 }),
+                 headers: {
+                 "Accept": "application/json",
+                 "Content-Type": "application/json"
+                        }
+                     }).then(function (response) {
+                        if (response.ok)
+                        return response.text()
+                        else
+                        alert("Error al ejecutar:(")
+                        }).then(function (Data) {
+                            if (Data != "1") {
+                            alert(Data)
+                            } else {
+                    getListComputadora();
+                }
+             })
+
+        }
+
+</script>
+
 }
