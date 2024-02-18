@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Listado de Itinerarios";
+}
+
+<div class="container mt-3">
+    <h2 class="text-center">@ViewBag.Title</h2>
+
+    <div id="divLista" class="form-horizontal mt-4 card">
+    </div>
+
+    <div class="d-flex justify-content-around mt-4">
+        <button class="btn btn-outline-primary" onclick="document.location.href='@Url.Content("~/Usuario/Index")'">Administrar Usuarios</button>
+        <button class="btn btn-outline-primary" onclick="document.location.href='@Url.Content("~/Computadora/List")'">Administrar Computadoras</button>
+        <button class="btn btn-outline-success" onclick="document.location.href='@Url.Content("~/Itinerario/New")'">Nuevo Itinerario</button>
+        <button class="btn btn-outline-info" onclick="getListItinerarios()">Refrescar Itinerarios</button>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        urlGet = "@Url.Content("~/Itinerario/List")";
+        getListItinerarios();
+
+        function getListItinerarios() {
+            fetch(urlGet)
+                .then(function (respuesta) {
+                    return respuesta.text();
+                })
+                .then((data) => {
+                    document.getElementById("divLista").innerHTML = data;
+                })
+        }
+
+        function funDelete(id_itinerario) {
+            var url = "@Url.Content("~/Itinerario/Delete")";
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify({
+                    id: id_itinerario
+                }),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response.ok)
+                    return response.text()
+                else
+                    alert("Error al ejecutar:(")
+            }).then(function (Data) {
+                if (Data != "1") {
+                    alert(Data)
+                } else {
+                    getListItinerarios();
+                }
+            })
+        }
+
+        function eliminarItinerario(id_itinerario) {
+            if (confirm('¿Estás seguro de que deseas eliminar este itinerario?')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Itinerario")',
+                    type: 'POST',
+                    data: { id: id_itinerario },
+                    success: function (response) {
+                        if (response === "1") {
+                            alert("Itinerario eliminado correctamente");
+                            window.location.reload();
+                        } else {
+                            alert("Error al eliminar el itinerario");
+                        }
+                    },
+                    error: function () {
+                        alert("Error al eliminar el itinerario");
+                    }
+                });
+            }
+        }
+    </script>
+}

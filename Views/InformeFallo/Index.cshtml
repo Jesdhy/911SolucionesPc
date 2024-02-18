@@ -1,0 +1,44 @@
+﻿@section scripts {
+    <script>
+    urlGet = "@Url.Content("~/InformeFallo/List")";
+    getListInformes();
+
+     function getListInformes() {
+        fetch(urlGet)
+            .then(function (respuesta) {
+                return respuesta.text();
+            })
+            .then((data) => {
+                document.getElementById("divLista").innerHTML = data;
+            })
+     }
+
+
+    function funDelete(id_informe) {
+             var url = "@Url.Content("~/InformeFallo/Delete")";
+             fetch(url, {
+                 method: "POST",
+                 body: JSON.stringify({
+                     id: id_informe
+                 }),
+                 headers: {
+                     "Accept": "application/json",
+                     "Content-Type": "application/json"
+                 }
+             }).then(function (response) {
+                 if (response.ok)
+                     return response.text()
+                 else
+                     alert("Error al ejecutar:(")
+             }).then(function (Data) {
+                 if (Data != "1") {
+                     alert(Data)
+                 } else {
+                     getListInformes();
+                 }
+             })
+         }
+
+    </script>
+}
+

@@ -1,0 +1,74 @@
+﻿@model PcSoluciones.Models.ViewModel.InformeFalloVista.InformeModel
+
+@{
+    ViewBag.Title = "Modificar Informe de Fallo";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">@ViewBag.Title</h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Update", "InformeFallo", FormMethod.Post, new { id = "formModificarInforme" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label for="fecha_aprox">Fecha Aproximada:</label>
+                            <input type="date" id="fecha_aprox" name="fecha_aprox" class="form-control" value="@Model.fecha_aprox" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado:</label>
+                            <input type="text" id="estado" name="estado" class="form-control" value="@Model.estado" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="repuesto">Repuesto:</label>
+                            <input type="text" id="repuesto" name="repuesto" class="form-control" value="@Model.repuesto" required />
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" onclick="funActualizar()">Actualizar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var url = "@Url.Content("~/InformeFallo/Update")";
+
+    function funActualizar() {
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                id_informe: @Model.id_informe,
+                fecha_aprox: document.getElementById("fecha_aprox").value,
+                estado: document.getElementById("estado").value,
+                repuesto: document.getElementById("repuesto").value
+            }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text()
+            else
+                alert("Error al ejecutar:(")
+        }).then(function (Data) {
+            if (Data != "1") {
+                alert(Data)
+            } else {
+                window.location.href = '@Url.Content("~/InformeFallo/Index")';
+            }
+        })
+    }
+</script>
+

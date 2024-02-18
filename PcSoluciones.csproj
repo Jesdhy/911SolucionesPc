@@ -130,6 +130,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ComputadoraController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InformeFalloController.cs" />
+    <Compile Include="Controllers\ItinerarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -168,7 +170,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\ComputadoraVista.cs" />
+    <Compile Include="Models\ViewModel\InformeFalloVista.cs" />
+    <Compile Include="Models\ViewModel\ItinerarioVista.cs" />
     <Compile Include="Models\ViewModel\ListComputadora.cs" />
+    <Compile Include="Models\ViewModel\ListItinerarios.cs" />
     <Compile Include="Models\ViewModel\ListUsuario.cs" />
     <Compile Include="Models\ViewModel\UsuarioVista.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,6 +211,7 @@
     <Content Include="pictures\Cliente.png" />
     <Content Include="pictures\computadora.png" />
     <Content Include="pictures\informe.png" />
+    <Content Include="pictures\ItinerarioM.png" />
     <Content Include="pictures\Tecnico.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -253,6 +259,15 @@
     <Content Include="Views\Computadora\Index.cshtml" />
     <Content Include="Views\Computadora\New.cshtml" />
     <Content Include="Views\Computadora\Edit.cshtml" />
+    <Content Include="Views\Itinerario\Index.cshtml" />
+    <Content Include="Views\Itinerario\List.cshtml" />
+    <Content Include="Views\Itinerario\New.cshtml" />
+    <Content Include="Views\Itinerario\Edit.cshtml" />
+    <Content Include="Views\Itinerario\Delete.cshtml" />
+    <Content Include="Views\InformeFallo\Index.cshtml" />
+    <Content Include="Views\InformeFallo\List.cshtml" />
+    <Content Include="Views\InformeFallo\New.cshtml" />
+    <Content Include="Views\InformeFallo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

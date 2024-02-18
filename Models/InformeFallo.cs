@@ -21,7 +21,7 @@ namespace PcSoluciones.Models
         }
     
         public int id_informe { get; set; }
-        public Nullable<int> id_computadora { get; set; }
+        public Nullable<int> idComput { get; set; }
         public string estado { get; set; }
         public Nullable<System.DateTime> fecha_aprox { get; set; }
         public string repuesto { get; set; }

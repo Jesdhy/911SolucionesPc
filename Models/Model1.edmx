@@ -40,7 +40,7 @@
             <PropertyRef Name="id_informe" />
           </Key>
           <Property Name="id_informe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="id_computadora" Type="int" />
+          <Property Name="idComput" Type="int" />
           <Property Name="estado" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="fecha_aprox" Type="date" />
           <Property Name="repuesto" Type="varchar" MaxLength="100" />
@@ -107,7 +107,7 @@
               <PropertyRef Name="id_computadora" />
             </Principal>
             <Dependent Role="InformeFallo">
-              <PropertyRef Name="id_computadora" />
+              <PropertyRef Name="idComput" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -196,7 +196,7 @@
             <PropertyRef Name="id_informe" />
           </Key>
           <Property Name="id_informe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_computadora" Type="Int32" />
+          <Property Name="idComput" Type="Int32" />
           <Property Name="estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_aprox" Type="DateTime" Precision="0" />
           <Property Name="repuesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -244,7 +244,7 @@
               <PropertyRef Name="id_computadora" />
             </Principal>
             <Dependent Role="InformeFallo">
-              <PropertyRef Name="id_computadora" />
+              <PropertyRef Name="idComput" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -355,7 +355,7 @@
             <EntityTypeMapping TypeName="stsolucionespcModel.InformeFallo">
               <MappingFragment StoreEntitySet="InformeFallo">
                 <ScalarProperty Name="id_informe" ColumnName="id_informe" />
-                <ScalarProperty Name="id_computadora" ColumnName="id_computadora" />
+                <ScalarProperty Name="idComput" ColumnName="idComput" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="fecha_aprox" ColumnName="fecha_aprox" />
                 <ScalarProperty Name="repuesto" ColumnName="repuesto" />

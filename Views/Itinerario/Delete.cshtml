@@ -1,0 +1,46 @@
+﻿@model PcSoluciones.Models.ViewModel.ItinerarioVista.ItinerarioModel
+
+@{
+    ViewBag.Title = "Eliminar Itinerario";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <p>¿Estás seguro de que deseas eliminar este itinerario?</p>
+    <p><strong>Fecha de Asignación:</strong> @Model.fecha_asignacion</p>
+    <p><strong>Descripción:</strong> @Model.descripcion</p>
+    <p><strong>Cédula del Técnico:</strong> @Model.num_cedulaTec</p>
+    <button type="button" class="btn btn-danger" onclick="funEliminar()">Eliminar</button>
+    <a href="@Url.Content("~/Itinerario/Index")" class="btn btn-secondary">Cancelar</a>
+</div>
+
+<script>
+    var url = "@Url.Content("~/Itinerario/Delete")";
+
+    function funEliminar() {
+        var itinerarioId = @Model.id_itinerario;
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                id: itinerarioId
+            }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text()
+            else
+                alert("Error al ejecutar:(")
+        }).then(function (Data) {
+            if (Data != "1") {
+                alert(Data)
+            } else {
+                window.location.href = '@Url.Content("~/Itinerario/Index")';
+            }
+        })
+    }
+</script>
+
