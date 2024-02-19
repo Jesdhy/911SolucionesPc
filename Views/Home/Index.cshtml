@@ -3,49 +3,58 @@
 }
 
 <main>
+    <img src="~/pictures/Logo_Transparente.png" alt="Logo de la empresa" class="logo">
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="display-4 text-light">Bienvenido</h1>
-            <p class="lead text-light">Soluciones confiables para todos tus problemas informáticos.</p>
         </div>
     </section>
 
     <div class="container">
-        <div class="row">
-            <section class="col-md-4 service">
-                <p>
-                    <a class="btn btn-outline-light" onclick="document.location.href='@Url.Content("~/Usuario/Index")'">
-                        <img src="~/pictures/Cliente.png" alt="Texto alternativo de la imagen">
-                        Administrar clientes &raquo;
-                    </a>
-                </p>
-            </section>
+        <div class="row justify-content-center">
+            <div class="col-md-4 service">
+                <div class="card">
+                    <img src="~/pictures/Cliente.png" class="card-img-top" alt="Icono Cliente">
+                    <div class="card-body text-center">
+                        <a href="@Url.Content("~/Usuario/Index")" class="btn btn-outline-light btn-lg btn-block">
+                            <i class="fas fa-users"></i> Administrar clientes &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-            <section class="col-md-4 service">
-                <p>
-                    <a class="btn btn-outline-light"  onclick="document.location.href='@Url.Content("~/InformeFallo/List")'">
-                        <img src="~/pictures/informe.png" alt="Texto alternativo de la imagen">
-                        Informe Fallo &raquo;
-                    </a>
-                </p>
-            </section>
-            <section class="col-md-4 service">
-                <p>
-                    <a class="btn btn-outline-light" onclick="document.location.href='@Url.Content("~/Computadora/List")'">
-                        <img src="~/pictures/computadora.png" alt="Texto alternativo de la imagen">
-                        Administrar Computadora &raquo;
-                    </a>
-                </p>
-            </section>
-            <section class="col-md-4 service">
-                <p>
-                    <a class="btn btn-outline-light" onclick="document.location.href='@Url.Content("~/Itinerario/Index")'">
-                        <img src="~/pictures/ItinerarioM.png" alt="Texto alternativo de la imagen">
-                        Administrar Itinerarios &raquo;
-                    </a>
-                </p>
-            </section>
+            <div class="col-md-4 service">
+                <div class="card">
+                    <img src="~/pictures/informe.png" class="card-img-top" alt="Icono Informe de Fallo">
+                    <div class="card-body text-center">
+                        <a href="@Url.Content("~/InformeFallo/List")" class="btn btn-outline-light btn-lg btn-block">
+                            <i class="fas fa-bug"></i> Informe Fallo &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-md-4 service">
+                <div class="card">
+                    <img src="~/pictures/computadora.png" class="card-img-top" alt="Icono Computadora">
+                    <div class="card-body text-center">
+                        <a href="@Url.Content("~/Computadora/List")" class="btn btn-outline-light btn-lg btn-block">
+                            <i class="fas fa-laptop"></i> Administrar Computadora &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 service">
+                <div class="card">
+                    <img src="~/pictures/ItinerarioM.png" class="card-img-top" alt="Icono Itinerario">
+                    <div class="card-body text-center">
+                        <a href="@Url.Content("~/Itinerario/Index")" class="btn btn-outline-light btn-lg btn-block">
+                            <i class="fas fa-map-marked-alt"></i> Administrar Itinerarios &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -53,7 +62,7 @@
 <style>
     body {
         font-family: fantasy;
-        background-image: url('https://serviciotecnicodecomputadoras.com/wp-content/uploads/2023/05/SERVICIO-TECNICO-PORTADA.png');
+        background-image: url('/pictures/fondo.png');
         background-size: cover;
         background-attachment: fixed;
         color: #ffffff; /* Color de texto blanco */
@@ -67,9 +76,9 @@
     }
 
     .jumbotron {
-        background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
-        padding: 70px 0;
-        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+        padding: 20px 0;
+        margin-bottom: 20px;
     }
 
     .service {
@@ -81,12 +90,26 @@
         border-color: #f0b184;
     }
 
-    .btn-outline-light {
-        margin: 10px;
-        background-color: #0606066d;
+    .card {
+        background-color: transparent;
+        border: none;
+    }
+
+    .card-img-top {
+        max-width: 150px;
+        margin: auto;
     }
 
     .text-light {
-        color: #060606; /* Cambio de color de texto claro */
+        color: #ffffff;
+    }
+
+    .logo {
+        display: block;
+        margin: 20px auto;
+        max-width: 800px;
     }
 </style>
+
+
+

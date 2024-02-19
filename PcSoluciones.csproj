@@ -210,8 +210,12 @@
     </Content>
     <Content Include="pictures\Cliente.png" />
     <Content Include="pictures\computadora.png" />
+    <Content Include="pictures\fondo.png" />
+    <Content Include="pictures\FondoCm.png" />
+    <Content Include="pictures\fondoFr.png" />
     <Content Include="pictures\informe.png" />
     <Content Include="pictures\ItinerarioM.png" />
+    <Content Include="pictures\Logo_Transparente.png" />
     <Content Include="pictures\Tecnico.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

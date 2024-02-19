@@ -3,15 +3,37 @@
 @{
     ViewBag.Title = "Nuevo Informe de Fallo";
 }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('/pictures/FondoCm.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        color: #333;
+        text-align: center;
+        margin: 15px;
+    }
+</style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="card-title mb-0">@ViewBag.Title</h2>
+                <div>
+                    <h2>@ViewBag.Title</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body d-flex justify-content-center align-items-center" style="background-color: #fff; border-radius: 0 0 20px 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px;">
                     @using (Html.BeginForm("Save", "InformeFallo", FormMethod.Post, new { id = "formNuevoInforme" }))
                     {
                         @Html.AntiForgeryToken()
@@ -46,6 +68,7 @@
     </div>
 </div>
 
+
 <script>
     var url = "@Url.Content("~/InformeFallo/Save")";
 
@@ -76,6 +99,7 @@
         })
     }
 </script>
+
 
 
 

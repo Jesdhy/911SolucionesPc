@@ -1,5 +1,17 @@
 ﻿@model List<PcSoluciones.Models.ViewModel.ItinerarioVista.UsuarioConItinerarioModel>
 
+<!-- hoja de estilos de FontAwesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<div class="btn-container">
+    <button class="btn btn-outline-info" onclick="getListItinerarios()">
+        <i class="fas fa-sync"></i> Refrescar
+    </button>
+    <button class="btn btn-outline-success" onclick="document.location.href='@Url.Content("~/Itinerario/New")'">
+        <i class="fas fa-plus"></i> Nuevo
+    </button>
+</div>
+
 <div class="container mt-3">
     <h2 class="text-center">@ViewBag.Title</h2>
 
@@ -7,6 +19,7 @@
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
+                    <th>Nombre de Usuario</th>
                     <th>ID</th>
                     <th>Fecha de Asignación</th>
                     <th>Descripción</th>
@@ -17,19 +30,21 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td colspan="5">@Html.DisplayFor(modelItem => item.usuario.nombre)</td>
-                    </tr>
                     foreach (var itinerario in item.Itinerarios)
                     {
                         <tr>
+                            <td>@item.usuario.nombre</td>
                             <td>@itinerario.id_itinerario</td>
                             <td>@itinerario.fecha_asignacion</td>
                             <td>@itinerario.descripcion</td>
                             <td>@itinerario.num_cedulaTec</td>
                             <td>
-                                <button class="btn btn-outline-primary" onclick="document.location.href='@Url.Content("~/Itinerario/Edit/" + itinerario.id_itinerario)'">Editar</button>
-                                <button class="btn btn-outline-danger" onclick="eliminarItinerario(@itinerario.id_itinerario)">Eliminar</button>
+                                <a href="@Url.Content("~/Itinerario/Edit/" + itinerario.id_itinerario)" class="btn btn-outline-primary">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <button class="btn btn-outline-danger" onclick="eliminarItinerario(@itinerario.id_itinerario)">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
                             </td>
                         </tr>
                     }
@@ -38,3 +53,4 @@
         </table>
     </div>
 </div>
+

@@ -3,76 +3,94 @@
 @{
     ViewBag.Title = "Listado de Informe Fallo";
 }
+
+<!-- hoja de estilos de FontAwesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background-image: url('/pictures/fondoFr.png');
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
 <div class="container mt-3">
     <h2 class="text-center">@ViewBag.Title</h2>
 
+    <button type="button" class="btn btn-refresh" onclick="getListInformes()">
+        <i class="fas fa-sync"></i> Refrescar 
+    </button>
 
-    <input type="button" class="btn btn-refresh" value="Refrescar" onclick="getListInformes(()" />
-    <input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/InformeFallo/New")'" />
+    <button type="button" class="btn btn-primary" onclick="document.location.href='@Url.Content("~/InformeFallo/New")'">
+        <i class="fas fa-plus"></i> Nuevo
+    </button>
 
-
-    <div id="divLista" class="form-horizontal mt-4">
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
+<div id="divLista" class="form-horizontal mt-4">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Modelo</th>
+                <th>ID Informe</th>
+                <th>Estado</th>
+                <th>Repuesto</th>
+                <th>Fecha Aprox.</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>ID Computadora</th>
-                    <th>Modelo</th>
-                    <th>ID Informe</th>
-                    <th>Estado</th>
-                    <th>Repuesto</th>
-                    <th>Fecha Aprox.</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td colspan="7">@Html.DisplayFor(modelItem => item.computadora.id_computadora)</td>
-                    </tr>
-                    foreach (var informe in item.informes)
+                    <td rowspan="@item.informes.Count">@Html.DisplayFor(modelItem => item.computadora.modelo)</td>
+                    @foreach (var informe in item.informes)
                     {
-                        <tr>
-                            <td>@item.computadora.id_computadora</td>
-                            <td>@item.computadora.modelo</td>
-                            <td>@informe.id_informe</td>
-                            <td>@informe.estado</td>
-                            <td>@informe.repuesto</td>
-                            <td>@informe.fecha_aprox</td>
-                            <td>
-                                <button class="btn btn-outline-primary" onclick="document.location.href='@Url.Content("~/InformeFallo/Edit/" + informe.id_informe)'">Editar</button>
-                                <button type="button" class="btn btn-danger" onclick="eliminarInforme('@informe.id_informe')">Eliminar</button>
-                            </td>
-                        </tr>
+                        <td>@informe.id_informe</td>
+                        <td>@informe.estado</td>
+                        <td>@informe.repuesto</td>
+                        <td>@informe.fecha_aprox</td>
+                        <td>
+                            <a href="@Url.Content("~/InformeFallo/Edit/" + informe.id_informe)" class="btn btn-outline-primary">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <button type="button" class="btn btn-danger" onclick="eliminarInforme('@informe.id_informe')">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </td>
+
                     }
-                }
+                    
+                </tr>
+            }
             </tbody>
         </table>
     </div>
 </div>
 
+
 @section scripts {
     <script>
-            function eliminarInforme(id_informe) {
-        if (confirm('¿Estás seguro de que deseas eliminar este Informe?')) {
-            $.ajax({
-                url: '@Url.Action("Delete", "InformeFallo")',
-                type: 'POST',
-                data: { id: id_informe },
-                success: function (response) {
-                    if (response === "1") {
-                        alert("Informe eliminado correctamente");
-                        window.location.reload();
-                    } else {
+        function eliminarInforme(id_informe) {
+            if (confirm('¿Estás seguro de que deseas eliminar este Informe?')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "InformeFallo")',
+                    type: 'POST',
+                    data: { id: id_informe },
+                    success: function (response) {
+                        if (response === "1") {
+                            alert("Informe eliminado correctamente");
+                            window.location.reload();
+                        } else {
+                            alert("Error al eliminar el informe");
+                        }
+                    },
+                    error: function () {
                         alert("Error al eliminar el informe");
                     }
-                },
-                error: function () {
-                    alert("Error al eliminar el informe");
-                }
-            });
+                });
+            }
         }
-    }
-
     </script>
 }

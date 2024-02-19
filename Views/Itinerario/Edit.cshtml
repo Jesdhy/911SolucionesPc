@@ -4,15 +4,41 @@
     ViewBag.Title = "Modificar Itinerario";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="card-title mb-0">@ViewBag.Title</h3>
-                </div>
-                <div class="card-body">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('/pictures/FondoCm.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        max-width: 500px;
+        padding: 70px;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 30px;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+</style>
+
+
                     <form id="formModificarItinerario">
+                        <h3>@ViewBag.Title</h3>
                         <div class="form-group">
                             <label for="fecha_asignacion">Fecha de Asignación:</label>
                             <input type="date" id="fecha_asignacion" name="fecha_asignacion" class="form-control" value="@Model.fecha_asignacion" required />
@@ -25,11 +51,6 @@
                             <button type="button" class="btn btn-primary" onclick="funActualizar()">Actualizar</button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     var url = "@Url.Content("~/Itinerario/Update")";

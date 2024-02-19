@@ -3,143 +3,93 @@
     ViewBag.Title = "Listado Usuarios y Computadoras";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="text-center">@ViewBag.Title</h2>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+<style>
+    body {
+        background-image: url('/pictures/fondoFr.png');
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+</style>
 
-        .btn {
-            padding: 8px 12px;
-            margin-right: 5px;
-            cursor: pointer;
-        }
 
-        .btn-primary {
-            background-color: #5aea49;
-            color: #fff;
-            border: none;
-        }
+<div class="container mt-3">
+    <div class="btn-group">
+        <button type="button" class="btn btn-outline-primary" onclick="getListComputadora()">
+            <i class="fas fa-sync"></i> Refrescar
+        </button>
+        <button type="button" class="btn btn-outline-primary" onclick="document.location.href='@Url.Content("~/Computadora/New")'">
+            <i class="fas fa-plus"></i> Nuevo
+        </button>
+    </div>
 
-        .btn-edit {
-            background-color: #9baefa;
-            color: #fff;
-            border: none;
-        }
-
-        .btn-refrs {
-            background-color: #6aa4ff;
-            color: #fff;
-            border: none;
-        }
-
-        .btn-btn-danger {
-            background-color: #e81b1b;
-            color: #fff;
-            border: none;
-        }
-
-        .usuario {
-            margin-bottom: 20px;
-        }
-
-            .usuario h2 {
-                color: #333;
-                font-size: 24px;
-                margin-bottom: 10px;
-            }
-
-        .computadoras {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .computadora {
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            padding: 10px;
-        }
-
-            .computadora h3 {
-                color: #555;
-                font-size: 18px;
-                margin: 0;
-                margin-bottom: 5px;
-            }
-
-            .computadora p {
-                color: #777;
-                margin: 0;
-            }
-    </style>
-
-    <input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/Computadora/New")'" />
-    <input type="button" class="btn btn-refrs" value="Refrescar" onclick="getListComputadora()" />
-
-    <div class="container">
-        @foreach (var usuarioConComputadora in Model)
-        {
-            <div class="usuario">
-                <h2>
-                    @usuarioConComputadora.usuario.nombre
-                    @foreach (var computadora in usuarioConComputadora.Computadoras)
+    <div class="table-responsive mt-3">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Usuario</th>
+                    <th>Modelo</th>
+                    <th>Descripción</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuarioConComputadora in Model)
+                {
+                    foreach (var computadora in usuarioConComputadora.Computadoras)
                     {
-                        <a href="@Url.Action("Edit", "Computadora", new { id_computadora = computadora.id_computadora })" class="btn btn-edit">Editar</a>
-                        <button type="button" class="btn btn-danger" onclick= "eliminarComputadora('@computadora.id_computadora')">Eliminar</button>
-                    }
-                </h2>
-                <ul class="computadoras">
-                    @foreach (var computadora in usuarioConComputadora.Computadoras)
-                    {
-                        <li class="computadora">
-                            <h3>@computadora.modelo</h3>
-                            <p>@computadora.descripcion</p>
-                        </li>
-                    }
-                </ul>
-            </div>
-        }
-
-    @section scripts {
-            <script>
-                function eliminarComputadora(id_computadora) {
-                    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-                        $.ajax({
-                            url: '@Url.Action("Delete", "Computadora")',
-                            type: 'POST',
-                            data: { id_computadora: id_computadora },
-                            success: function (response) {
-                                if (response === "1") {
-                                    alert("Computadora eliminada correctamente");
-                                    window.location.reload();
-                                } else {
-                                    alert("Error al eliminar la computadora");
-                                }
-                            },
-                            error: function () {
-                                alert("Error al eliminar la computadora");
-                            }
-                        });
+                        <tr>
+                            <td>@usuarioConComputadora.usuario.nombre</td>
+                            <td>@computadora.modelo</td>
+                            <td>@computadora.descripcion</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Computadora", new { id_computadora = computadora.id_computadora })" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-pencil-alt"></i> Editar
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="eliminarComputadora('@computadora.id_computadora')">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
                     }
                 }
-            </script>
-    }
-
+            </tbody>
+        </table>
+    </div>
 </div>
+
+@section scripts {
+    <script>
+        function eliminarComputadora(id_computadora) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta computadora?')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Computadora")',
+                    type: 'POST',
+                    data: { id_computadora: id_computadora },
+                    success: function (response) {
+                        if (response === "1") {
+                            alert("Computadora eliminada correctamente");
+                            window.location.reload();
+                        } else {
+                            alert("Error al eliminar la computadora");
+                        }
+                    },
+                    error: function () {
+                        alert("Error al eliminar la computadora");
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+
+
 
 
 

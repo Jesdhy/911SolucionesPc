@@ -8,19 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <style>
-        body3 {
+        body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('/pictures/FondoCm.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
             display: flex;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
+            align-items: center;
+            height: 110vh;
+        }
+        .container {
+            max-width: 500px;
+            padding: 70px;
         }
 
         form {
             background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
         }
@@ -63,7 +71,7 @@
             }
     </style>
 </head>
-<body3>
+<body>
 
     <form>
         <h2>@ViewBag.Title</h2>
@@ -88,7 +96,7 @@
 
     </form>
 
-</body3>
+</body>
 
 
 <script>
