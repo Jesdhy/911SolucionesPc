@@ -1,0 +1,317 @@
+﻿@model PcSoluciones.Models.ViewModel.UsuarioVista
+@{
+    ViewBag.Title = "Factura";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        body50 {
+            font-family: Arial, sans-serif;
+            height: 250vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('/pictures/Factura.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="button"] {
+            background-color: #4286a9;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+            input[type="button"]:hover {
+                background-color: #000000;
+            }
+    </style>
+
+</head>
+<body50>
+
+    <form class="body50">
+        <h2>@ViewBag.Title</h2>
+
+        <!-- Agregar campos para id_factura, id_informe y descripción -->
+        <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" class="form-control" value="Soluciones PC" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccionE" class="form-control" value=" Av. Abraham calazacon y Calle 17 de febrero" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefonoE" class="form-control" value="0997779660" readonly />
+        </div>
+
+        <h2>Datos Cliente</h2>
+
+        <div class="form-group">
+            <label for="Nombre">Nombre</label>
+            @Html.DropDownList("Factura", (SelectList)ViewBag.nombre, new { onchange = "updateResult('Factura: ' + this.value)", @class = "form-control", id = "Nombre" })
+        </div>
+
+        <div class="form-group">
+            <label for="cedula">Cédula</label>
+            @Html.DropDownList("Factura", (SelectList)ViewBag.cedula, new { onchange = "updateResult('Factura: ' + this.value)", @class = "form-control", id = "Cedula" })
+        </div>
+
+        <div class="form-group">
+            <label for="celular">Teléfono</label>
+            <input type="text" id="telefonoC" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="dirección">Direción</label>
+            <input type="text" id="direccionC" class="form-control" />
+        </div>
+
+        <h2>Detalle Factura</h2>
+
+        <div class="form-group">
+            <label for="Modelo">Modelo</label>
+            @Html.DropDownList("Factura", (SelectList)ViewBag.modelo, new { onchange = "updateResult('Factura: ' + this.value)", @class = "form-control", id = "Modelo" })
+        </div>
+
+        <div class="form-group">
+            <label class="bold" for="Informe">Informe:</label>
+            @Html.DropDownList("Factura", (SelectList)ViewBag.fallo, new { onchange = "updateResult('Factura: ' + this.value)", @class = "form-control", id = "Informe" })
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" class="form-control" />
+        </div>
+
+        <!-- Campos para ingresar datos del producto -->
+        <div class="form-group">
+            <label for="nombreProducto">Nombre del Producto</label>
+            <input type="text" id="nombreProducto" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="precioProducto">Precio del Producto</label>
+            <input type="text" id="precioProducto" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="text" id="fecha" class="form-control" readonly />
+        </div>
+
+
+        <!-- Agregar una nueva sección para la factura -->
+        <div class="form-group">
+            <h3>Descripción</h3>
+            <ul id="listaProductos">
+                <!-- Aquí se mostrarán los productos seleccionados -->
+            </ul>
+            <p>Total: $<span id="totalFactura">0</span></p>
+            <input type="button" value="Agregar a la Factura" onclick="agregarAFactura()" class="btn btn-primary" />
+            <input type="button" value="Imprimir Factura" onclick="imprimirFactura()" class="btn btn-success" />
+        </div>
+    </form>
+
+    <script>
+        // Lista de productos seleccionados para la factura
+        var productosSeleccionados = [];
+
+        // Función para obtener la fecha actual en formato YYYY-MM-DD
+        function obtenerFechaActual() {
+            var fecha = new Date();
+            var dia = fecha.getDate();
+            var mes = fecha.getMonth() + 1; // Sumar 1 porque los meses comienzan desde 0
+            var año = fecha.getFullYear();
+
+            // Formatear la fecha como YYYY-MM-DD
+            return año + '-' + (mes < 10 ? '0' : '') + mes + '-' + (dia < 10 ? '0' : '') + dia;
+        }
+        // Función para agregar un producto a la factura
+        function agregarAFactura() {
+            var descripcion = document.getElementById('descripcion').value;
+            var nombreProducto = document.getElementById('nombreProducto').value;
+            var precioProducto = parseFloat(document.getElementById('precioProducto').value);
+
+            if (descripcion.trim() !== "" && nombreProducto.trim() !== "" && !isNaN(precioProducto) && precioProducto > 0) {
+                var nuevoProducto = { nombre: nombreProducto, precio: precioProducto };
+                productosSeleccionados.push(nuevoProducto);
+                actualizarFactura();
+
+                // Limpiar los campos de nombre y precio del producto
+                document.getElementById('nombreProducto').value = "";
+                document.getElementById('precioProducto').value = "";
+                document.getElementById('fecha').value = obtenerFechaActual();
+            } else {
+                alert("Ingrese valores válidos para descripción, nombre y precio del producto.");
+            }
+        }
+
+        // Función para imprimir la factura en una ventana emergente
+        function imprimirFactura() {
+            //cliente
+            var Nombre = document.getElementById('Nombre').value;
+            var Cedula = document.getElementById('Cedula').value;
+            var telefonoC = document.getElementById('telefonoC').value;
+            var direccionC = document.getElementById('direccionC').value;
+
+            //Empresa
+            var empresa = document.getElementById('empresa').value;
+            var direccionE = document.getElementById('direccionE').value;
+            var telefonoE = document.getElementById('telefonoE').value;
+
+            //detalle
+            var Modelo = document.getElementById('Modelo').value;
+            var Informe = document.getElementById('Informe').value;
+            var descripcion = document.getElementById('descripcion').value;
+            var fecha = document.getElementById('fecha').value;
+
+
+            var facturaTexto = `<html lang="es">
+<head>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #e6f7ff; /* Color de fondo azul claro */
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 400px;
+                margin: 20px auto;
+            }
+
+            h2, p {
+                text-align: justify;
+                margin-bottom: 20px;
+                color: #333; /* Color de texto negro */
+            }
+
+            ul {
+                text-align: center;
+                list-style-type: none;
+                padding: 0;
+                margin-bottom: 20px;
+            }
+
+            li {
+                margin-bottom: 5px;
+            }
+
+            strong {
+                font-weight: bold;
+                color: #ff9900; /* Color de texto naranja */
+            }
+        </style>
+</head>
+<body>
+        <h2 style="color: #3366cc;">Factura</h2>
+        <h2 style="color: #3366cc;">Datos de la empresa</h2>
+        <p>Empresa: ${empresa}</p>
+        <p>Dirección: ${direccionE}</p>
+        <p>Teléfono: ${telefonoE}</p>
+        <h2 style="color: #3366cc;">Datos del cliente</h2>
+        <p>Nombre: ${Nombre}</p>
+        <p>Cédula: ${Cedula}</p>
+        <p>Teléfono: ${telefonoC}</p>
+        <p>Dirección: ${direccionC}</p>
+        <h2 style="color: #3366cc;">Detalle: Factura</h2>
+        <p>Modelo: ${Modelo}</p>
+        <p>Informe: ${Informe}</p>
+        <p>Descripción: ${descripcion}</p>
+        <p>Fecha: ${fecha}</p>
+        <h2 style="color: #3366cc;">Artículos</h2>
+        <ul>
+            ${productosSeleccionados.map(producto => `<li>${producto.nombre} - $${producto.precio}</li>`).join('')}
+        </ul>
+        <p><strong>Total (sin IVA): $${calcularTotalFactura()}</strong></p>
+        <p><strong>Total con IVA (12%): $${calcularTotalFacturaConIVA()}</strong></p>
+</body>
+</html>`;
+
+            // Abrir una ventana emergente para mostrar la factura
+            var ventanaFactura = window.open('', '_blank');
+            ventanaFactura.document.write(facturaTexto);
+            ventanaFactura.document.close();
+        }
+
+        // Función para actualizar la factura y mostrar el total
+        function actualizarFactura() {
+            var listaProductosElement = document.getElementById('listaProductos');
+            var totalFacturaElement = document.getElementById('totalFactura');
+
+            // Limpiar la lista de productos
+            listaProductosElement.innerHTML = "";
+
+            // Calcular el total de la factura
+            var total = calcularTotalFactura();
+
+            // Mostrar los productos en la lista
+            productosSeleccionados.forEach(producto => {
+                var listItem = document.createElement('li');
+                listItem.textContent = producto.nombre + " - $" + producto.precio;
+                listaProductosElement.appendChild(listItem);
+            });
+
+            // Mostrar el total en la factura
+            totalFacturaElement.textContent = total;
+        }
+
+        // Función para calcular el total de la factura (sin IVA)
+        function calcularTotalFactura() {
+            return productosSeleccionados.reduce((acc, producto) => acc + producto.precio, 0);
+        }
+
+        // Función para calcular el total de la factura con IVA (12%)
+        function calcularTotalFacturaConIVA() {
+            var totalSinIVA = calcularTotalFactura();
+            var iva = totalSinIVA * 0.12;
+            return totalSinIVA + iva;
+        }
+    </script>
+</body50>

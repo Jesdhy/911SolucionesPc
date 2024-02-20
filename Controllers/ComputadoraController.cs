@@ -187,6 +187,29 @@ namespace PcSoluciones.Controllers
             }
         }
 
+        public ActionResult Factura()
+        {
+            List<string> fallo = new List<string>();
+            List<string> modelo = new List<string>();
+            List<string> nombre = new List<string>();
+            List<string> cedula = new List<string>();
+            using (stSolucionesPcEntities db = new stSolucionesPcEntities())
+            {
+                fallo = db.Computadora.Select(e => e.descripcion).ToList();
+                modelo = db.Itinerario.Select(e => e.descripcion).ToList();
+                nombre = db.Usuario.Select(e => e.nombre).ToList();
+                cedula = db.Usuario.Select(e => e.num_cedula).ToList();
+            }
+
+            ViewBag.fallo = new SelectList(fallo);
+            ViewBag.modelo = new SelectList(modelo);
+            ViewBag.nombre = new SelectList(nombre);
+            ViewBag.cedula = new SelectList(cedula);
+
+            return View();
+        }
+
+
 
 
 

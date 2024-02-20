@@ -210,11 +210,13 @@
     </Content>
     <Content Include="pictures\Cliente.png" />
     <Content Include="pictures\computadora.png" />
+    <Content Include="pictures\Factura.png" />
     <Content Include="pictures\fondo.png" />
     <Content Include="pictures\FondoCm.png" />
     <Content Include="pictures\fondoFr.png" />
     <Content Include="pictures\informe.png" />
     <Content Include="pictures\ItinerarioM.png" />
+    <Content Include="pictures\Login.png" />
     <Content Include="pictures\Logo_Transparente.png" />
     <Content Include="pictures\Tecnico.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -272,6 +274,8 @@
     <Content Include="Views\InformeFallo\List.cshtml" />
     <Content Include="Views\InformeFallo\New.cshtml" />
     <Content Include="Views\InformeFallo\Edit.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Computadora\Factura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
