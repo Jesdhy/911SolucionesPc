@@ -9,6 +9,18 @@
             <h1 class="display-4 text-light">Bienvenido</h1>
         </div>
     </section>
+    <section>
+        <h1 class="display-4 text-about">Sistema de registro de Servicio técnico</h1>
+        <p class="text">
+            Tu solución para administrar la entrada y salida de computadoras de manera eficiente!
+        </p>
+    </section>
+    <section>
+        <img src="~/pictures/imagen_inicio.jpg" alt="Imagen emprendimiento" class="imag">
+    </section>
+    <section>
+        <h1 class="display-4 text-contex">Nuestros servicios</h1>
+    </section>
 
     <div class="container">
         <div class="row justify-content-center">
@@ -16,7 +28,7 @@
                 <div class="card">
                     <img src="~/pictures/Cliente.png" class="card-img-top" alt="Icono Cliente">
                     <div class="card-body text-center">
-                        <a href="@Url.Content("~/Usuario/Index")" class="btn btn-outline-light btn-lg btn-block">
+                        <a href="@Url.Content("~/Usuario/Index")" class="btn btn-outline-light btn-lg btn-block custom-btn">
                             <i class="fas fa-users"></i> Administrar clientes &raquo;
                         </a>
                     </div>
@@ -27,7 +39,7 @@
                 <div class="card">
                     <img src="~/pictures/informe.png" class="card-img-top" alt="Icono Informe de Fallo">
                     <div class="card-body text-center">
-                        <a href="@Url.Content("~/InformeFallo/List")" class="btn btn-outline-light btn-lg btn-block">
+                        <a href="@Url.Content("~/InformeFallo/List")" class="btn btn-outline-light btn-lg btn-block custom-btn">
                             <i class="fas fa-bug"></i> Informe Fallo &raquo;
                         </a>
                     </div>
@@ -38,7 +50,7 @@
                 <div class="card">
                     <img src="~/pictures/computadora.png" class="card-img-top" alt="Icono Computadora">
                     <div class="card-body text-center">
-                        <a href="@Url.Content("~/Computadora/List")" class="btn btn-outline-light btn-lg btn-block">
+                        <a href="@Url.Content("~/Computadora/List")" class="btn btn-outline-light btn-lg btn-block custom-btn">
                             <i class="fas fa-laptop"></i> Administrar Computadora &raquo;
                         </a>
                     </div>
@@ -49,7 +61,7 @@
                 <div class="card">
                     <img src="~/pictures/ItinerarioM.png" class="card-img-top" alt="Icono Itinerario">
                     <div class="card-body text-center">
-                        <a href="@Url.Content("~/Itinerario/Index")" class="btn btn-outline-light btn-lg btn-block">
+                        <a href="@Url.Content("~/Itinerario/Index")" class="btn btn-outline-light btn-lg btn-block custom-btn">
                             <i class="fas fa-map-marked-alt"></i> Administrar Itinerarios &raquo;
                         </a>
                     </div>
@@ -59,16 +71,16 @@
     </div>
 </main>
 
+
 <style>
     body {
         font-family: fantasy;
-        background-image: url('/pictures/fondo.png');
         background-size: cover;
         background-attachment: fixed;
         color: #ffffff; /* Color de texto blanco */
         margin: 0;
         padding: 0;
-        background-color: rgb(169, 228, 255); /* Fondo con nuevo color HEX y mayor transparencia */
+        background-color: #ffffff; /* Fondo con nuevo color HEX y mayor transparencia */
     }
 
     main {
@@ -86,7 +98,7 @@
     }
 
     .btn-primary {
-        background-color: #f0b184;
+        background-color: rgba(0, 0, 0, 0.8);
         border-color: #f0b184;
     }
 
@@ -109,6 +121,44 @@
         margin: 20px auto;
         max-width: 800px;
     }
+
+    .imag {
+        display: block;
+        margin: 20px auto;
+        max-width: 800px;
+    }
+    .text-about {
+        color: #273aaa;
+        text-align: center;
+        font-size: 40px;
+        margin: 50px auto;
+    }
+    .text-contex {
+        color: #1de2b8;
+        text-align: center;
+        font-size: 40px;
+        margin: 50px auto;
+    }
+
+    .text {
+        color: rgb(0, 0, 0);
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        font-size: 20px;
+        margin: 50px auto;
+    }
+
+    .custom-btn {
+        background-color: #1de2b8; /* Cambia el color a azul */
+        border-color: #1de2b8; /* Cambia el color del borde a azul */
+        color: black; /* Cambia el color del texto a blanco */
+    }
+
+        .custom-btn:hover {
+            background-color: #78fce4; /* Cambia el color de fondo al pasar el ratón por encima */
+            border-color: white; /* Cambia el color del borde al pasar el ratón por encima */
+        }
+
 </style>
 
 
