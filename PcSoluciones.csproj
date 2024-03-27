@@ -576,10 +576,9 @@
     <Content Include="pictures\Cliente.png" />
     <Content Include="pictures\computadora.png" />
     <Content Include="pictures\Factura.png" />
-    <Content Include="pictures\fondo.png" />
     <Content Include="pictures\FondoCm.png" />
     <Content Include="pictures\fondoFr.png" />
-    <Content Include="pictures\imagen_inicio.jpg" />
+    <Content Include="pictures\imagen_inicio.png" />
     <Content Include="pictures\informe.png" />
     <Content Include="pictures\ItinerarioM.png" />
     <Content Include="pictures\Login.png" />
